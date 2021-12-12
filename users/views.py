@@ -29,7 +29,7 @@ from article.serializers import ArticleSerializer
 from feed.serializers import MumbleSerializer
 from notification.models import Notification
 
-from .models import UserProfile, SkillTag, TopicTag
+from .models import UserProfile, SkillTag, TopicTag, EducationTag, ExperienceTag, CertificationTag
 from .serializers import (UserProfileSerializer, UserSerializer,
                           UserSerializerWithToken, CurrentUserSerializer)
 
@@ -208,11 +208,48 @@ def update_skills(request):
 
 @api_view(['PATCH'])
 @permission_classes((IsAuthenticated,))
+def update_education(request): 
+    user_profile = request.user.userprofile
+    education = request.data
+    user_profile.education.set(
+        EducationTag.objects.get_or_create(name=educate['school_name'])[0] for educate in education
+    )
+    user_profile.save()
+    serializer = UserProfileSerializer(user_profile, many=False)
+    return Response(serializer.data)
+
+
+@api_view(['PATCH'])
+@permission_classes((IsAuthenticated,))
 def update_interests(request): 
     user_profile = request.user.userprofile
     interests = request.data
     user_profile.interests.set(
         TopicTag.objects.get_or_create(name=interest['name'])[0] for interest in interests
+    )
+    user_profile.save()
+    serializer = UserProfileSerializer(user_profile, many=False)
+    return Response(serializer.data)
+
+@api_view(['PATCH'])
+@permission_classes((IsAuthenticated,))
+def update_experience(request): 
+    user_profile = request.user.userprofile
+    experiences = request.data
+    user_profile.experiences.set(
+        ExperienceTag.objects.get_or_create(name=experience['job_title'])[0] for experience in experiences
+    )
+    user_profile.save()
+    serializer = UserProfileSerializer(user_profile, many=False)
+    return Response(serializer.data)
+
+@api_view(['PATCH'])
+@permission_classes((IsAuthenticated,))
+def update_certifications(request): 
+    user_profile = request.user.userprofile
+    certifications = request.data
+    user_profile.certifications.set(
+        CertificationTag.objects.get_or_create(name=certification['title'])[0] for certification in certifications
     )
     user_profile.save()
     serializer = UserProfileSerializer(user_profile, many=False)

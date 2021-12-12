@@ -1,10 +1,24 @@
+from django.db.models import fields
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from .models import UserProfile, TopicTag, SkillTag
+from .models import UserProfile, TopicTag, SkillTag, EducationTag, ExperienceTag, CertificationTag
 
 
+class EducationTagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EducationTag
+        fields = '__all__'
+
+class ExperienceTagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ExperienceTag
+        fields = '__all__'
+class CertificationTagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CertificationTag
+        fields = '__all__'
 class TopicTagSerializer(serializers.ModelSerializer):
     class Meta:
         model = TopicTag
@@ -20,6 +34,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
     profile_pic = serializers.SerializerMethodField(read_only=True)
     interests = TopicTagSerializer(many=True, read_only=True)
     skills = SkillTagSerializer(many=True, read_only=True)
+    education = EducationTagSerializer(many=True, read_only=True)
+    experience = ExperienceTagSerializer(many=True, read_only=True)
+    certification = CertificationTagSerializer(many=True, read_only=True)
     class Meta:
         model = UserProfile
         fields = '__all__'
