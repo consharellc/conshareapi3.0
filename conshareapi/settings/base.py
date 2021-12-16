@@ -16,7 +16,7 @@ SECRET_KEY = 'my secret key for local testing'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['mumbleapi.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -159,7 +159,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_ALL_ORIGINS = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
@@ -173,26 +173,11 @@ STATICFILES_DIRS = [
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
-
-
-LINODE_BUCKET = 'mumble'
-LINODE_BUCKET_REGION = 'us-east-1'
-LINODE_BUCKET_ACCESS_KEY = os.environ.get('MUMBLE_LINODE_BUCKET_ACCESS_KEY')
-LINODE_BUCKET_SECRET_KEY = os.environ.get('MUMBLE_LINODE_BUCKET_SECRET_KEY')
-
-AWS_QUERYSTRING_AUTH = True
-AWS_S3_FILE_OVERWRITE = False
-
-AWS_S3_ENDPOINT_URL = f'https://{LINODE_BUCKET_REGION}.linodeobjects.com'
-AWS_ACCESS_KEY_ID = LINODE_BUCKET_ACCESS_KEY
-AWS_SECRET_ACCESS_KEY = LINODE_BUCKET_SECRET_KEY
-AWS_STORAGE_BUCKET_NAME = LINODE_BUCKET
-
 # django_heroku.settings(locals(), test_runner=False)
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_SSL = False
-EMAIL_HOST_USER = 'amerixverse@gmail.com'
-EMAIL_HOST_PASSWORD = '@EricMukolwe2021!'
-EMAIL_PORT = 587
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_USE_SSL = False
+# EMAIL_HOST_USER = 'amerixverse@gmail.com'
+# EMAIL_HOST_PASSWORD = '@EricMukolwe2021!'
+# EMAIL_PORT = 587
