@@ -5,7 +5,7 @@ import uuid
 
 
 #This needs to be shareable
-class Mumble(models.Model):
+class Feed(models.Model):
     parent =models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
     #For re-mumble (Share) functionality
     remumble = models.ForeignKey("self", on_delete=models.CASCADE, related_name='remumbles', null=True, blank=True)
@@ -13,6 +13,7 @@ class Mumble(models.Model):
     #content is allowed to be plan for remumbles
     content = RichTextField(null=True, blank=True)
     image = models.ImageField(blank=True, null=True)
+    video = models.FileField(blank=True, null=True)
     vote_rank = models.IntegerField(blank=True, null=True, default=0)
     comment_count = models.IntegerField(blank=True, null=True, default=0)
     share_count = models.IntegerField(blank=True, null=True, default=0)
@@ -51,7 +52,7 @@ class MumbleVote(models.Model):
         )
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    mumble = models.ForeignKey(Mumble, on_delete=models.CASCADE, null=True, blank=True)
+    mumble = models.ForeignKey(Feed, on_delete=models.CASCADE, null=True, blank=True)
     value = models.CharField(max_length=20, choices=CHOICES)
     id = models.UUIDField(default=uuid.uuid4,  unique=True, primary_key=True, editable=False)
 

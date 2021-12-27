@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 
-from .models import Mumble
+from .models import Feed
 from users.serializers import UserProfileSerializer, UserSerializer
 
 
@@ -12,7 +12,7 @@ class MumbleSerializer(serializers.ModelSerializer):
     down_voters = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
-        model = Mumble
+        model = Feed
         fields = '__all__'
 
     def get_user(self, obj):

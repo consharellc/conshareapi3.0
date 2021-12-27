@@ -1,9 +1,9 @@
 from django.contrib import admin
 from datetime import timedelta
-from .models import Mumble, MumbleVote
+from .models import Feed, MumbleVote
 
 
-class AdminMumble(admin.ModelAdmin):
+class AdminFeed(admin.ModelAdmin):
     list_display = ('user', 'vote_rank', 'created','get_utc')
     search_fields = ('user',)
     list_filter = ('created', 'vote_rank', 'user',)
@@ -23,5 +23,5 @@ class AdminMumbleVote(admin.ModelAdmin):
     empty_value_display = '-empty field-'
 
 
-admin.site.register(Mumble, AdminMumble)
+admin.site.register(Feed, AdminFeed)
 admin.site.register(MumbleVote, AdminMumbleVote)

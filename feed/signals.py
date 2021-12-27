@@ -1,7 +1,7 @@
 from django.db.models.signals import post_save, pre_save, post_delete
 from django.contrib.auth.models import User
 from users.models import UserProfile
-from .models import Mumble, MumbleVote
+from .models import Feed, MumbleVote
 from .utils import update_comment_counts, update_remumble_counts
 
 def update_mumble(sender, instance, created, **kwargs):
@@ -30,8 +30,8 @@ def delete_mumble_comments(sender, instance, **kwargs):
     except Exception as e:
         print('remumble associated with comment was deleted')
 
-post_save.connect(update_mumble, sender=Mumble)
-post_delete.connect(delete_mumble_comments, sender=Mumble)
+post_save.connect(update_mumble, sender=Feed)
+post_delete.connect(delete_mumble_comments, sender=Feed)
 
 
 def vote_updated(sender, instance, **kwargs):
