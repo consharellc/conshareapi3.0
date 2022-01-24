@@ -25,7 +25,6 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-from article.serializers import ArticleSerializer
 from feed.serializers import MumbleSerializer
 from notification.models import Notification
 
@@ -171,12 +170,7 @@ def user_mumbles(request, username):
     except Exception as e:
         return Response({'detail':f'{e}'},status=status.HTTP_404_NOT_FOUND)
 
-@api_view(['GET'])
-def user_articles(request, username):
-    user = User.objects.get(username=username)
-    articles = user.article_set
-    serializer = ArticleSerializer(articles, many=True)
-    return Response(serializer.data)
+
 
 
 @api_view(['GET'])

@@ -32,7 +32,6 @@ INSTALLED_APPS = [
 
     'users.apps.UsersConfig',
     'feed.apps.FeedConfig',
-    'article.apps.ArticleConfig',
     'discussion.apps.DiscussionConfig',
     'message.apps.MessageConfig',
     'notification.apps.NotificationConfig',

@@ -1,7 +1,6 @@
 from django.contrib.auth.models import User
 from django.db.models.signals import post_delete, post_save, pre_save
 
-from article.models import Article
 from discussion.models import Discussion
 from feed.models import Feed
 from users.models import UserProfile
@@ -48,6 +47,6 @@ def discussion_created(sender, instance, created, **kwargs):
             content=f"A discussion was started by {instance.user.userprofile.name}."
         )
 
-post_save.connect(article_created, sender=Article)
+
 post_save.connect(mumble_created, sender=Feed)
 post_save.connect(discussion_created, sender=Discussion)

@@ -32,7 +32,6 @@ urlpatterns = [
     path('<str:username>/', views.user, name="user"),
     path('skills/<str:skill>', views.users_by_skill, name="users-by-skill"),
     path('<str:username>/mumbles/', views.user_mumbles, name="user-mumbles"),
-    path('<str:username>/articles/', views.user_articles, name="user-articles"),
 
     # Forget password or reset password
     path('password/change/',views.password_change,name="password-change"),
