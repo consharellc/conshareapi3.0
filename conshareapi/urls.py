@@ -27,7 +27,7 @@ urlpatterns = [
     path('api/discussions/', include('discussion.urls')),
     path('api/messages/', include('message.urls')),
     path('api/notifications/', include('notification.urls')),
-    path('api/mumbles/', include('feed.urls')),
+    path('api/feeds/', include('feed.urls')),
     path('schema/', get_schema_view(
         title="ConshareAPI",
         description="conshareapi documentation",
