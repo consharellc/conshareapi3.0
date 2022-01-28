@@ -25,7 +25,7 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-from feed.serializers import MumbleSerializer
+from feed.serializers import FeedSerializer
 from notification.models import Notification
 
 from .models import UserProfile, SkillTag, InterestTag, EducationTag, ExperienceTag, CertificationTag
@@ -165,7 +165,7 @@ def user_mumbles(request, username):
     try:
         user = User.objects.get(username=username)
         mumbles = user.mumble_set.filter(parent=None)
-        serializer = MumbleSerializer(mumbles, many=True)
+        serializer = FeedSerializer(mumbles, many=True)
         return Response(serializer.data)
     except Exception as e:
         return Response({'detail':f'{e}'},status=status.HTTP_404_NOT_FOUND)

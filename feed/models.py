@@ -18,7 +18,7 @@ class Feed(models.Model):
     comment_count = models.IntegerField(blank=True, null=True, default=0)
     share_count = models.IntegerField(blank=True, null=True, default=0)
     created = models.DateTimeField(auto_now_add=True)
-    votes = models.ManyToManyField(User, related_name='mumble_user', blank=True, through='MumbleVote')
+    votes = models.ManyToManyField(User, related_name='mumble_user', blank=True, through='FeedLike')
     id = models.UUIDField(default=uuid.uuid4,  unique=True, primary_key=True, editable=False)
 
     class Meta:
@@ -44,7 +44,7 @@ class Feed(models.Model):
 
     
 
-class MumbleVote(models.Model):
+class FeedLike(models.Model):
     
     CHOICES = (
         ('upvote', 'upvote'),

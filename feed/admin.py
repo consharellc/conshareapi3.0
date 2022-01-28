@@ -1,6 +1,6 @@
 from django.contrib import admin
 from datetime import timedelta
-from .models import Feed, MumbleVote
+from .models import Feed, FeedLike
 
 
 class AdminFeed(admin.ModelAdmin):
@@ -16,7 +16,7 @@ class AdminFeed(admin.ModelAdmin):
 
 
 
-class AdminMumbleVote(admin.ModelAdmin):
+class AdminFeedLike(admin.ModelAdmin):
     list_display = ('user', 'mumble', 'value')
     search_fields = ('user',)
     list_filter = ('user',)
@@ -24,4 +24,4 @@ class AdminMumbleVote(admin.ModelAdmin):
 
 
 admin.site.register(Feed, AdminFeed)
-admin.site.register(MumbleVote, AdminMumbleVote)
+admin.site.register(FeedLike, AdminFeedLike)

@@ -1,7 +1,7 @@
 from django.db.models.signals import post_save, pre_save, post_delete
 from django.contrib.auth.models import User
 from users.models import UserProfile
-from .models import Feed, MumbleVote
+from .models import Feed, FeedLike
 from .utils import update_comment_counts, update_remumble_counts
 
 def update_mumble(sender, instance, created, **kwargs):
@@ -46,5 +46,5 @@ def vote_updated(sender, instance, **kwargs):
 
 
 
-post_save.connect(vote_updated, sender=MumbleVote)
-post_delete.connect(vote_updated,  sender=MumbleVote)
+post_save.connect(vote_updated, sender=FeedLike)
+post_delete.connect(vote_updated,  sender=FeedLike)

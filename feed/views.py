@@ -6,8 +6,8 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from .models import Feed, MumbleVote
-from .serializers import MumbleSerializer
+from .models import Feed, FeedLike
+from .serializers import FeedSerializer
 
 # Create your views here.
 
@@ -57,7 +57,7 @@ def mumbles(request):
     paginator = PageNumberPagination()
     paginator.page_size = 10
     result_page = paginator.paginate_queryset(mumbles, request)
-    serializer = MumbleSerializer(result_page, many=True)
+    serializer = FeedSerializer(result_page, many=True)
     return paginator.get_paginated_response(serializer.data)
 
 @api_view(['GET'])
@@ -65,7 +65,7 @@ def mumbles(request):
 def mumble_details(request,pk):
     try:
         mumble = Feed.objects.get(id=pk)
-        serializer = MumbleSerializer(mumble, many=False)
+        serializer = FeedSerializer(mumble, many=False)
         return Response(serializer.data)
     except:
         message = {
@@ -93,7 +93,7 @@ def create_mumble(request):
             content=data['content']
             )
 
-    serializer = MumbleSerializer(mumble, many=False)
+    serializer = FeedSerializer(mumble, many=False)
     return Response(serializer.data)
 
 @api_view(['PATCH'])
@@ -107,7 +107,7 @@ def edit_mumble(request,pk):
         if user != mumble.user:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         else:
-            serializer = MumbleSerializer(mumble,data = data)
+            serializer = FeedSerializer(mumble,data = data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data,status=status.HTTP_200_OK)
@@ -134,7 +134,7 @@ def delete_mumble(request, pk):
 def mumble_comments(request, pk):
     mumble = Feed.objects.get(id=pk)
     comments = mumble.mumble_set.all()
-    serializer = MumbleSerializer(comments, many=True)
+    serializer = FeedSerializer(comments, many=True)
     return Response(serializer.data)
 
 
@@ -158,7 +158,7 @@ def remumble(request):
             remumble=original_mumble,
             user=user,
         )
-        serializer = MumbleSerializer(mumble, many=False)
+        serializer = FeedSerializer(mumble, many=False)
         return Response(serializer.data)
     except Exception as e:
         return Response({'detail':f'{e}'},status=status.HTTP_403_FORBIDDEN)
@@ -172,7 +172,7 @@ def update_vote(request):
 
     mumble = Feed.objects.get(id=data['post_id'])
     #What if user is trying to remove their vote?
-    vote, created = MumbleVote.objects.get_or_create(mumble=mumble, user=user)
+    vote, created = FeedLike.objects.get_or_create(mumble=mumble, user=user)
 
     if vote.value == data.get('value'):
         #If same value is sent, user is clicking on vote to remove it
@@ -184,6 +184,6 @@ def update_vote(request):
 
     #We re-query the vote to get the latest vote rank value
     mumble = Feed.objects.get(id=data['post_id'])
-    serializer = MumbleSerializer(mumble, many=False)
+    serializer = FeedSerializer(mumble, many=False)
 
     return Response(serializer.data)

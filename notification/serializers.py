@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import Notification
 
 from users.serializers import UserProfileSerializer
-from feed.serializers import MumbleSerializer
+from feed.serializers import FeedSerializer
 from discussion.serializers import DiscussionSerializer
 
 class NotificationSerializer(serializers.ModelSerializer):
@@ -26,7 +26,7 @@ class NotificationSerializer(serializers.ModelSerializer):
 
     def get_mumble(self, obj):
         if obj.notification_type == 'mumble':
-            return MumbleSerializer(obj.mumble, many=False).data
+            return FeedSerializer(obj.mumble, many=False).data
         return None
 
     def get_discussion(self, obj):

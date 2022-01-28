@@ -5,7 +5,7 @@ from .models import Feed
 from users.serializers import UserProfileSerializer, UserSerializer
 
 
-class MumbleSerializer(serializers.ModelSerializer):
+class FeedSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField(read_only=True)
     original_mumble = serializers.SerializerMethodField(read_only=True)
     up_voters = serializers.SerializerMethodField(read_only=True)
@@ -24,7 +24,7 @@ class MumbleSerializer(serializers.ModelSerializer):
     def get_original_mumble(self, obj):
         original = obj.remumble
         if original != None:
-            serializer = MumbleSerializer(original, many=False)
+            serializer = FeedSerializer(original, many=False)
             return serializer.data
         else:
             return None
