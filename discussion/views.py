@@ -8,7 +8,7 @@ from .serializers import DiscussionSerializer , DiscussionCommentSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.pagination import PageNumberPagination
-from users.models import TopicTag
+from users.models import InterestTag
 
 
 @api_view(['GET'])
@@ -121,9 +121,9 @@ def create_discussion(request):
             )
         if tags is not None:
             for tag_name in tags:
-                tag_instance = TopicTag.objects.filter(name=tag_name).first()
+                tag_instance = InterestTag.objects.filter(name=tag_name).first()
                 if not tag_instance:
-                    tag_instance = TopicTag.objects.create(name=tag_name)
+                    tag_instance = InterestTag.objects.create(name=tag_name)
                 discussion.tags.add(tag_instance)
         discussion.save()
     serializer = DiscussionSerializer(discussion, many=False)

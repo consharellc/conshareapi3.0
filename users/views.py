@@ -28,7 +28,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from feed.serializers import MumbleSerializer
 from notification.models import Notification
 
-from .models import UserProfile, SkillTag, TopicTag, EducationTag, ExperienceTag, CertificationTag
+from .models import UserProfile, SkillTag, InterestTag, EducationTag, ExperienceTag, CertificationTag
 from .serializers import (UserProfileSerializer, UserSerializer,
                           UserSerializerWithToken, CurrentUserSerializer)
 
@@ -219,7 +219,7 @@ def update_interests(request):
     user_profile = request.user.userprofile
     interests = request.data
     user_profile.interests.set(
-        TopicTag.objects.get_or_create(name=interest['name'])[0] for interest in interests
+        InterestTag.objects.get_or_create(name=interest['name'])[0] for interest in interests
     )
     user_profile.save()
     serializer = UserProfileSerializer(user_profile, many=False)

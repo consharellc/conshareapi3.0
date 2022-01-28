@@ -1,6 +1,6 @@
 from django.contrib import admin
 from datetime import timedelta
-from .models import TopicTag, SkillTag, UserProfile, EducationTag, ExperienceTag, CertificationTag
+from .models import InterestTag, SkillTag, UserProfile, EducationTag, ExperienceTag, CertificationTag
 
 class AdminEducationTag(admin.ModelAdmin):
     search_fields = ('school_name',)
@@ -15,7 +15,7 @@ class AdminCertificationTag(admin.ModelAdmin):
     search_fields = ('title',)
     list_filter = ('title',)
     empty_value_display = '-empty field-'
-class AdminTopicTag(admin.ModelAdmin):
+class AdminInterestTag(admin.ModelAdmin):
     search_fields = ('name',)
     list_filter = ('name',)
     empty_value_display = '-empty field-'
@@ -41,6 +41,6 @@ class AdminUserProfile(admin.ModelAdmin):
 admin.site.register(EducationTag, AdminEducationTag)
 admin.site.register(ExperienceTag, AdminExperienceTag)
 admin.site.register(CertificationTag, AdminCertificationTag)
-admin.site.register(TopicTag, AdminTopicTag)
+admin.site.register(InterestTag, AdminInterestTag)
 admin.site.register(SkillTag, AdminSkillTag)
 admin.site.register(UserProfile, AdminUserProfile)

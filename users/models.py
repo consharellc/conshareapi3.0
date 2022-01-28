@@ -6,7 +6,7 @@ import uuid
 # A topic tag is added to by the user so they can content on their feed with the 
 # related tags that
 # They have selected
-class TopicTag(models.Model):
+class InterestTag(models.Model):
     name = models.CharField(primary_key=True, max_length=150, null=False, blank=False)
 
     def __str__(self):
@@ -58,7 +58,7 @@ class UserProfile(models.Model):
     vote_ratio = models.IntegerField(blank=True, null=True, default=0)
     followers_count = models.IntegerField(blank=True, null=True, default=0)
     skills = models.ManyToManyField(SkillTag, related_name='personal_skills', blank=True)
-    interests = models.ManyToManyField(TopicTag, related_name='topic_interests', blank=True)
+    interests = models.ManyToManyField(InterestTag, related_name='topic_interests', blank=True)
     certifications = models.ManyToManyField(CertificationTag, related_name='licenses', blank=True)
     jobs = models.ManyToManyField(ExperienceTag, related_name='jobs_done', blank=True)
     education = models.ManyToManyField(EducationTag, related_name='schools', blank=True)

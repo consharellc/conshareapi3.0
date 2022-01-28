@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from ckeditor.fields import RichTextField
-from users.models import TopicTag
+from users.models import InterestTag
 import uuid
 
 
@@ -11,7 +11,7 @@ class Discussion(models.Model):
     headline = models.CharField(max_length=500, default="no headline")
     content = RichTextField(max_length=10000)
     # discussion tags from user model
-    tags = models.ManyToManyField(TopicTag, related_name='discussion_tags', blank=True) 
+    tags = models.ManyToManyField(InterestTag, related_name='discussion_tags', blank=True) 
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
