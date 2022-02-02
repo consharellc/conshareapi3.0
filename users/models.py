@@ -1,6 +1,8 @@
+from tabnanny import verbose
 from django.contrib.auth.models import User
 from django.db import models
 import uuid
+
 
 
 # A topic tag is added to by the user so they can content on their feed with the 
@@ -73,3 +75,20 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return str(self.user.username)
+
+
+class UserRefer(models.Model):
+    """ current user doing the refer, user being reffered, user/s receving the refer"""
+    referer = models.ForeignKey(User,on_delete=models.CASCADE, null=True, blank=True)
+    referee = models.ForeignKey(User,on_delete=models.CASCADE, null=True, blank=True, related_name='refers')
+    caption = models.TextField(max_length=3000,null=True, blank=True)
+    recipient = models.ForeignKey(User,on_delete=models.CASCADE, null=True, blank=True, related_name='recipients')
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = "Referrals"
+        
+    def __str__(self) -> str:
+        return self.referee.username
+
+
