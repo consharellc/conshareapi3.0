@@ -24,13 +24,14 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework import generics
 
 from feed.serializers import FeedSerializer
 from notification.models import Notification
 
-from .models import UserProfile, SkillTag, InterestTag, EducationTag, ExperienceTag, CertificationTag
+from .models import UserProfile, SkillTag, InterestTag, EducationTag, ExperienceTag, CertificationTag, UserRefer
 from .serializers import (UserProfileSerializer, UserSerializer,
-                          UserSerializerWithToken, CurrentUserSerializer)
+                          UserSerializerWithToken, CurrentUserSerializer, UserReferSerializer)
 
 from rest_framework.generics import CreateAPIView
 
@@ -407,3 +408,15 @@ def password_change(request):
         return Response({'detail':'New password field required'})
     elif new_password_confirm is None:
         return Response({'detail':'New password confirm field required'})
+
+
+class ReferList(generics.ListCreateApiView):
+    queryset = UserRefer.objects.all()
+    serializer_class = UserReferSerializer
+class CreateRefer(generics.CreateApiView):
+    queryset = UserRefer.objects.all()
+    serializer_class = UserReferSerializer
+
+
+
+

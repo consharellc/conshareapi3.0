@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 
+
 from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
@@ -32,6 +33,8 @@ urlpatterns = [
     path('<str:username>/', views.user, name="user"),
     path('skills/<str:skill>', views.users_by_skill, name="users-by-skill"),
     path('<str:username>/mumbles/', views.user_mumbles, name="user-mumbles"),
+    path('referlist', views.ReferList.as_view(), name="refers"),
+    path('createrefer', views.CreateRefer.as_view(), name="createrefer"),
 
     # Forget password or reset password
     path('password/change/',views.password_change,name="password-change"),

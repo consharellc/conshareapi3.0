@@ -3,7 +3,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from .models import UserProfile, InterestTag, SkillTag, EducationTag, ExperienceTag, CertificationTag
+from .models import UserProfile, InterestTag, SkillTag, EducationTag, ExperienceTag, CertificationTag, UserRefer
 
 
 class EducationTagSerializer(serializers.ModelSerializer):
@@ -93,3 +93,14 @@ class UserSerializerWithToken(UserSerializer):
     def get_refresh(self, obj):
         token = RefreshToken.for_user(obj)
         return str(token)
+
+
+class UserReferSerializer(serializers.ModelSerializer):
+    referer = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = UserRefer
+        fields = "__all__"
+
+    def get_created_by(self, obj):
+        return UserProfileSerializer(obj.referer.userprofile, many=False).data

@@ -87,8 +87,8 @@ class UserRefer(models.Model):
 
     class Meta:
         verbose_name_plural = "Referrals"
-        
+
     def __str__(self) -> str:
-        return self.referee.username
+        return str("you referred " + self.referee.username + " to ") + self.recipient.username
 
 
