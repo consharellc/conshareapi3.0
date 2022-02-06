@@ -102,5 +102,5 @@ class UserReferSerializer(serializers.ModelSerializer):
         model = UserRefer
         fields = "__all__"
 
-    def get_created_by(self, obj):
+    def get_referer(self, obj):
         return UserProfileSerializer(obj.referer.userprofile, many=False).data

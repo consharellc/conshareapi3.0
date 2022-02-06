@@ -5,12 +5,12 @@ import os.path
 
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
-#email verification imports
+# email verification imports
 from django.contrib.auth.tokens import default_token_generator
 from django.core.files.storage import default_storage
 # from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
-from django.db.models import Q , Count
+from django.db.models import Q, Count
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
@@ -36,6 +36,8 @@ from .serializers import (UserProfileSerializer, UserSerializer,
 from rest_framework.generics import CreateAPIView
 
 # Create your views here.
+
+
 def email_validator(email):
     """validates & return the entered email if correct
     else returns an exception as string"""
@@ -46,17 +48,19 @@ def email_validator(email):
     except EmailNotValidError as e:
         return str(e)
 
+
 class RegisterView(APIView):
     permission_classes = [permissions.AllowAny]
     authentication_classes = []
     http_method_names = ['get', 'head', 'post']
+
     def post(self, request):
         data = request.data
         username = data.get('username')
         email = data.get('email')
         password = data.get('password')
         email_valid_check_result = email_validator(email)
-        messages = {'errors':[]}
+        messages = {'errors': []}
         if username == None:
             messages['errors'].append('username can\'t be empty')
         if email == None:
@@ -66,11 +70,13 @@ class RegisterView(APIView):
         if password == None:
             messages['errors'].append('Password can\'t be empty')
         if User.objects.filter(email=email).exists():
-            messages['errors'].append("Account already exists with this email id.")    
+            messages['errors'].append(
+                "Account already exists with this email id.")
         if User.objects.filter(username__iexact=username).exists():
-            messages['errors'].append("Account already exists with this username.") 
+            messages['errors'].append(
+                "Account already exists with this username.")
         if len(messages['errors']) > 0:
-            return Response({"detail":messages['errors']},status=status.HTTP_400_BAD_REQUEST)
+            return Response({"detail": messages['errors']}, status=status.HTTP_400_BAD_REQUEST)
         try:
             user = User.objects.create(
                 username=username,
@@ -80,11 +86,12 @@ class RegisterView(APIView):
             serializer = UserSerializerWithToken(user, many=False)
         except Exception as e:
             print(e)
-            return Response({'detail':f'{e}'},status=status.HTTP_400_BAD_REQUEST)
+            return Response({'detail': f'{e}'}, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.data)
 
+
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-    
+
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
@@ -115,12 +122,12 @@ class MyTokenObtainPairView(TokenObtainPairView):
 def users(request):
     query = request.query_params.get('q') or ''
     users = User.objects.filter(
-        Q(userprofile__name__icontains=query) | 
+        Q(userprofile__name__icontains=query) |
         Q(userprofile__username__icontains=query)
     ).order_by('-userprofile__followers_count')
     paginator = PageNumberPagination()
     paginator.page_size = 10
-    result_page = paginator.paginate_queryset(users,request)
+    result_page = paginator.paginate_queryset(users, request)
     serializer = UserSerializer(result_page, many=True)
     return paginator.get_paginated_response(serializer.data)
 
@@ -135,20 +142,22 @@ def users_by_skill(request, skill):
         ).order_by('-userprofile__followers_count')
         paginator = PageNumberPagination()
         paginator.page_size = 10
-        result_page = paginator.paginate_queryset(users,request)
+        result_page = paginator.paginate_queryset(users, request)
         serializer = UserSerializer(result_page, many=True)
         return paginator.get_paginated_response(serializer.data)
     except Exception as e:
-        return Response({'detail':f'{e}'},status=status.HTTP_400_BAD_REQUEST)
+        return Response({'detail': f'{e}'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET'])
 # @permission_classes((IsAuthenticated,))
 def users_recommended(request):
     user = request.user
-    users = User.objects.annotate(followers_count=Count('userprofile__followers')).order_by('followers_count').reverse().exclude(id=user.id)[0:5]
+    users = User.objects.annotate(followers_count=Count('userprofile__followers')).order_by(
+        'followers_count').reverse().exclude(id=user.id)[0:5]
     serializer = UserSerializer(users, many=True)
     return Response(serializer.data)
+
 
 @api_view(['GET'])
 def user(request, username):
@@ -161,6 +170,7 @@ def user(request, username):
     serializer = UserSerializer(user, many=False)
     return Response(serializer.data)
 
+
 @api_view(['GET'])
 def user_mumbles(request, username):
     try:
@@ -169,9 +179,7 @@ def user_mumbles(request, username):
         serializer = FeedSerializer(mumbles, many=True)
         return Response(serializer.data)
     except Exception as e:
-        return Response({'detail':f'{e}'},status=status.HTTP_404_NOT_FOUND)
-
-
+        return Response({'detail': f'{e}'}, status=status.HTTP_404_NOT_FOUND)
 
 
 @api_view(['GET'])
@@ -182,6 +190,7 @@ def following(request):
     serializer = UserProfileSerializer(following, many=True)
     return Response(serializer.data)
 
+
 @api_view(['GET'])
 @permission_classes((IsAuthenticated,))
 def profile(request):
@@ -189,9 +198,10 @@ def profile(request):
     serializer = UserSerializer(user, many=False)
     return Response(serializer.data)
 
+
 @api_view(['PATCH'])
 @permission_classes((IsAuthenticated,))
-def update_skills(request): 
+def update_skills(request):
     user_profile = request.user.userprofile
     skills = request.data
     user_profile.skills.set(
@@ -201,9 +211,10 @@ def update_skills(request):
     serializer = UserProfileSerializer(user_profile, many=False)
     return Response(serializer.data)
 
+
 @api_view(['PATCH'])
 @permission_classes((IsAuthenticated,))
-def update_education(request): 
+def update_education(request):
     user_profile = request.user.userprofile
     education = request.data
     user_profile.education.set(
@@ -216,7 +227,7 @@ def update_education(request):
 
 @api_view(['PATCH'])
 @permission_classes((IsAuthenticated,))
-def update_interests(request): 
+def update_interests(request):
     user_profile = request.user.userprofile
     interests = request.data
     user_profile.interests.set(
@@ -226,9 +237,10 @@ def update_interests(request):
     serializer = UserProfileSerializer(user_profile, many=False)
     return Response(serializer.data)
 
+
 @api_view(['PATCH'])
 @permission_classes((IsAuthenticated,))
-def update_experience(request): 
+def update_experience(request):
     user_profile = request.user.userprofile
     experiences = request.data
     user_profile.experiences.set(
@@ -238,9 +250,10 @@ def update_experience(request):
     serializer = UserProfileSerializer(user_profile, many=False)
     return Response(serializer.data)
 
+
 @api_view(['PATCH'])
 @permission_classes((IsAuthenticated,))
-def update_certifications(request): 
+def update_certifications(request):
     user_profile = request.user.userprofile
     certifications = request.data
     user_profile.certifications.set(
@@ -250,6 +263,7 @@ def update_certifications(request):
     serializer = UserProfileSerializer(user_profile, many=False)
     return Response(serializer.data)
 
+
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
 def follow_user(request, username):
@@ -258,12 +272,12 @@ def follow_user(request, username):
         user_to_follow = User.objects.get(username=username)
         user_to_follow_profile = user_to_follow.userprofile
 
-        if user == user_to_follow: 
+        if user == user_to_follow:
             return Response('You can not follow yourself')
-            
+
         if user in user_to_follow_profile.followers.all():
             user_to_follow_profile.followers.remove(user)
-            user_to_follow_profile.followers_count =  user_to_follow_profile.followers.count()
+            user_to_follow_profile.followers_count = user_to_follow_profile.followers.count()
             user_to_follow_profile.save()
             return Response('User unfollowed')
         else:
@@ -280,15 +294,14 @@ def follow_user(request, username):
             )
             return Response('User followed')
     except Exception as e:
-        message = {'detail':f'{e}'}
-        return Response(message,status=status.HTTP_204_NO_CONTENT)
+        message = {'detail': f'{e}'}
+        return Response(message, status=status.HTTP_204_NO_CONTENT)
 
 
 class UserProfileUpdate(APIView):
     permission_classes = [IsAuthenticated]
     serializer_class = UserProfileSerializer
     #http_method_names = ['patch', 'head']
-
 
     def patch(self, *args, **kwargs):
         profile = self.request.user.userprofile
@@ -304,41 +317,42 @@ class UserProfileUpdate(APIView):
                 user.save()
                 profile.save()
             return Response({'success': True, 'message': 'successfully updated your info',
-                        'user': UserSerializer(user).data,'updated_email': new_email}, status=200)
+                             'user': UserSerializer(user).data, 'updated_email': new_email}, status=200)
         else:
             response = serializer.errors
             return Response(response, status=401)
 
 
 class ProfilePictureUpdate(APIView):
-    permission_classes=[IsAuthenticated]
-    serializer_class=UserProfileSerializer
-    parser_class=(FileUploadParser,)
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserProfileSerializer
+    parser_class = (FileUploadParser,)
 
     def patch(self, *args, **kwargs):
         rd = random.Random()
-        profile_pic=self.request.FILES['profile_pic']
+        profile_pic = self.request.FILES['profile_pic']
         extension = os.path.splitext(profile_pic.name)[1]
-        profile_pic.name='{}{}'.format(uuid.UUID(int=rd.getrandbits(128)), extension)
+        profile_pic.name = '{}{}'.format(
+            uuid.UUID(int=rd.getrandbits(128)), extension)
         filename = default_storage.save(profile_pic.name, profile_pic)
         setattr(self.request.user.userprofile, 'profile_pic', filename)
-        serializer=self.serializer_class(
+        serializer = self.serializer_class(
             self.request.user.userprofile, data={}, partial=True)
         if serializer.is_valid():
-            user=serializer.save().user
-            response={'type': 'Success', 'message': 'successfully updated your info',
+            user = serializer.save().user
+            response = {'type': 'Success', 'message': 'successfully updated your info',
                         'user': UserSerializer(user).data}
         else:
-            response=serializer.errors
+            response = serializer.errors
         return Response(response)
+
 
 @api_view(['DELETE'])
 @permission_classes((IsAuthenticated,))
 def ProfilePictureDelete(request):
     user = request.user.userprofile
     user.profile_pic.url = 'default.png'
-    return Response({'detail':'Profile picture deleted '})
-
+    return Response({'detail': 'Profile picture deleted '})
 
 
 @api_view(['POST'])
@@ -346,12 +360,13 @@ def ProfilePictureDelete(request):
 def delete_user(request):
     user = request.user
     user.delete()
-    return Response({'detail':'Account deleted successfully'},status=status.HTTP_200_OK)
+    return Response({'detail': 'Account deleted successfully'}, status=status.HTTP_200_OK)
 
 # THIS EMAIL VERIFICATION SYSTEM IS ONLY VALID FOR LOCAL TESTING
 # IN PRODUCTION WE NEED A REAL EMAIL , TILL NOW WE ARE USING DEFAULT EMAIL BACKEND
-# THIS DEFAULT BACKEND WILL PRINT THE VERIFICATION EMAIL IN THE CONSOLE 
+# THIS DEFAULT BACKEND WILL PRINT THE VERIFICATION EMAIL IN THE CONSOLE
 # LATER WE CAN SETUP SMTP FOR REAL EMAIL SENDING TO USER
+
 
 @api_view(['POST'])
 # @permission_classes((IsAuthenticated,))
@@ -370,9 +385,9 @@ def send_activation_email(request):
             mail_subject, message, to=[to_email]
         )
         email.send()
-        return Response('Mail sent Successfully',status=status.HTTP_200_OK)
+        return Response('Mail sent Successfully', status=status.HTTP_200_OK)
     except Exception as e:
-        return Response({'detail':f'{e}'},status=status.HTTP_403_FORBIDDEN)
+        return Response({'detail': f'{e}'}, status=status.HTTP_403_FORBIDDEN)
 
 
 @api_view(['GET'])
@@ -388,7 +403,8 @@ def activate(request, uidb64, token):
         user_profile.save()
         return Response("Email Verified")
     else:
-        return Response('Something went wrong , please try again',status=status.HTTP_406_NOT_ACCEPTABLE)
+        return Response('Something went wrong , please try again', status=status.HTTP_406_NOT_ACCEPTABLE)
+
 
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
@@ -401,22 +417,28 @@ def password_change(request):
         if new_password == new_password_confirm:
             user.set_password(new_password)
             user.save()
-            return Response({'detail':'Password changed successfully'},status=status.HTTP_200_OK)
+            return Response({'detail': 'Password changed successfully'}, status=status.HTTP_200_OK)
         else:
-            return Response({"detail":'Password doesn\'t match'})
+            return Response({"detail": 'Password doesn\'t match'})
     elif new_password is None:
-        return Response({'detail':'New password field required'})
+        return Response({'detail': 'New password field required'})
     elif new_password_confirm is None:
-        return Response({'detail':'New password confirm field required'})
+        return Response({'detail': 'New password confirm field required'})
 
 
-class ReferList(generics.ListCreateApiView):
+class ReferList(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = UserRefer.objects.all()
     serializer_class = UserReferSerializer
-class CreateRefer(generics.CreateApiView):
+
+    def get(self, request, format=None):
+        content = {
+            'status': 'request was permitted'
+        }
+        return Response(content)
+
+
+class CreateRefer(generics.CreateAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = UserRefer.objects.all()
     serializer_class = UserReferSerializer
-
-
-
-
