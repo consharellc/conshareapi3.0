@@ -4,13 +4,13 @@ from .models import (
     DiscussionComment,
     DiscussionVote
 )
-from users.serializers import UserProfileSerializer, TopicTagSerializer
+from users.serializers import UserProfileSerializer, InterestTagSerializer
 
 
 
 class DiscussionSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField(read_only=True)
-    tags = TopicTagSerializer(many=True, read_only=True)
+    tags = InterestTagSerializer(many=True, read_only=True)
     
     class Meta:
         model = Discussion

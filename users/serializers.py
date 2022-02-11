@@ -19,7 +19,7 @@ class CertificationTagSerializer(serializers.ModelSerializer):
     class Meta:
         model = CertificationTag
         fields = '__all__'
-class TopicTagSerializer(serializers.ModelSerializer):
+class InterestTagSerializer(serializers.ModelSerializer):
     class Meta:
         model = InterestTag
         fields = '__all__'
@@ -32,7 +32,7 @@ class SkillTagSerializer(serializers.ModelSerializer):
 
 class UserProfileSerializer(serializers.ModelSerializer):
     profile_pic = serializers.SerializerMethodField(read_only=True)
-    interests = TopicTagSerializer(many=True, read_only=True)
+    interests = InterestTagSerializer(many=True, read_only=True)
     skills = SkillTagSerializer(many=True, read_only=True)
     education = EducationTagSerializer(many=True, read_only=True)
     experience = ExperienceTagSerializer(many=True, read_only=True)

@@ -16,9 +16,9 @@ def api_root(request):
         'login': reverse('users-api:login', request=request),
         'profile_update': reverse('users-api:profile_update', request=request),
 
-        # mumbles endpoints
+        # feeds endpoints
         'feeds': reverse('feeds-api:feeds', request=request),
         'feed-create': reverse('feeds-api:feed-create', request=request),
-        'feed-remumble': reverse('feeds-api:feed-remumble', request=request),
-        'posts-vote': reverse('mumbles-api:posts-vote', request=request),
+        'feed-share': reverse('feeds-api:feed-share', request=request),
+        'posts-vote': reverse('feeds-api:posts-vote', request=request),
     })

@@ -31,10 +31,10 @@ SECURE_SSL_REDIRECT = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('MUMBLE_DB_NAME'),
-        'USER': os.environ.get('MUMBLE_USER'),
-        'PASSWORD': os.environ.get('MUMBLE_DB_PASS'),
-        'HOST': os.environ.get('MUMBLE_HOST'),
+        'NAME': os.environ.get('consharedbname'),
+        'USER': os.environ.get('conshare user'),
+        'PASSWORD': os.environ.get('consharedbpass'),
+        'HOST': os.environ.get('consharehost'),
         'PORT': '5432',
     },
     'message': {

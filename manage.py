@@ -6,6 +6,7 @@ import sys
 
 def main():
     """Run administrative tasks."""
+    print("system booting .....")
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'conshareapi.settings.dev')
     try:
         from django.core.management import execute_from_command_line
