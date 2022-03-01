@@ -6,6 +6,7 @@ from users.models import UserProfile
 from .serializers import MessageSerializer , ThreadSerializer
 from .models import UserMessage , Thread
 from django.db.models import Q
+from rest_framework import generics
 
 @api_view(['GET'])
 @permission_classes((IsAuthenticated,))
