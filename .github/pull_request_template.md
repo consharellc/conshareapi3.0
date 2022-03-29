@@ -4,8 +4,6 @@
 
 <!-- It may take from your time, but think that collaborators and contributors will get your changes in a good way !-->
 
-<!--- Thank you for your contribution to Mumble !-->
-
 ### Describe your changes :
 
 <br/>
@@ -59,30 +57,3 @@ I worked on the ..... because ...
 <!-- add an x in [] if done !-->
 
 <!-- don't mark items that you didn't do !-->
-
-- [ ] I have read the **Code Of Conduct** document.
-- [ ] I have read the **CONTRIBUTING** document.
-- [ ] I have performed a self-review of my own. 
-- [ ] I have tagged my reviewers below.
-- [ ] I have commented my code, particularly in hard-to-understand areas.
-- [ ] My changes generate no new warnings.
-- [ ] I have added tests that prove my fix is effective or that my feature works.
-- [ ] All new and existing tests passed.
-
-
-
-#
-
-### Reviewers
-
-  <!-- Please see the contributing guidelines and then add your reviewer(s) !-->
-
-<!--- Mumble Community thanks you for explaining your changes in detail !-->
-
-<!--- If you are unsure of people to review your work, you can add anyone of these developers :) !-->
-
-
-
-<!--- Documentation: @MidouWebDev, @abhivemp -->
-
-<!--- Backend: @PraveenMalethia , @abhivemp, @codyseibert , @bashiru98, @divanov11 -->
