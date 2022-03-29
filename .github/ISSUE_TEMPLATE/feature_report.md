@@ -1,6 +1,6 @@
 ---
 name: Feature/Enhancement request
-about: Suggest an idea for this project
+about: Suggest an idea that can be added to conshare
 title: ""
 labels: feature, enhancement
 assignees: ""
