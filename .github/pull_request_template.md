@@ -46,10 +46,6 @@ I worked on the ..... because ...
 <p align="center">If it is possible, please link screenshots of your changes preview !
 </p>
 
-#
-
-### Checklist:
-
 <!-- Check your work !-->
 
 <!-- If you have access, please choose the right review label ("Review: Needs 1" OR "Review: Needs 2")!-->
