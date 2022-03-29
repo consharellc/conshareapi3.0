@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        db: [sqlite]
+        db: [postgresql]
         python-version: [3.8]
 
     steps:
