@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: "Use this template to report a bug you found in Mumble"
+about: "Use this template to report a bug you found in Conshare"
 title: ''
 labels: "bug"
 assignees: ''
