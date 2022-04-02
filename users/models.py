@@ -52,9 +52,19 @@ class ExperienceTag(models.Model):
     def __str__(self) -> str:
         return self.job_title
 
+class ConnectionRequest(models.Model):
+    from_user = models.ForeignKey(User, related_name='from_user', on_delete=models.CASCADE)
+    to_user = models.ForeignKey(User, related_name='to_user', on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name_plural = "Connections"
+
+    def __str__(self) -> str:
+        return self.to_user.username
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    connections = models.ForeignKey(ConnectionRequest,related_name='connections', on_delete=models.CASCADE)
     name = models.CharField(max_length=200, null=True)
     username = models.CharField(max_length=200, null=True)
     profile_pic = models.ImageField(blank=True, null=True, default='default.png')
@@ -94,5 +104,8 @@ class UserRefer(models.Model):
 
     def __str__(self) -> str:
         return str("you referred " + self.referee.username + " to ") + self.recipient.username
+
+
+
 
 
