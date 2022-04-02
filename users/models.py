@@ -59,7 +59,7 @@ class UserProfile(models.Model):
     username = models.CharField(max_length=200, null=True)
     profile_pic = models.ImageField(blank=True, null=True, default='default.png')
     bio = models.TextField(null=True)
-    country = CountryField(blank_label='(select country)')
+    country = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
     vote_ratio = models.IntegerField(blank=True, null=True, default=0)
     followers_count = models.IntegerField(blank=True, null=True, default=0)
