@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
 from django_countries.serializers import CountryFieldMixin
 
-from .models import UserProfile, InterestTag, SkillTag, EducationTag, ExperienceTag, CertificationTag, UserRefer
+from .models import UserProfile, InterestTag, SkillTag, EducationTag, ExperienceTag, CertificationTag, UserRefer, ConnectionRequest
 
 
 class EducationTagSerializer(serializers.ModelSerializer):
@@ -105,3 +105,12 @@ class UserReferSerializer(serializers.ModelSerializer):
 
     def get_referer(self, obj):
         return UserProfileSerializer(obj.referer.userprofile, many=False).data
+
+class ConnectionRequestSerializer(serializers.ModelSerializer):
+    from_user = serializers.SerializerMethodField(read_only=True)
+    class Meta:
+        model = ConnectionRequest
+        fields = "__all__"
+
+    def get_requester(self, obj):
+        return UserProfileSerializer(obj.from_user.userprofile, many=False).data
