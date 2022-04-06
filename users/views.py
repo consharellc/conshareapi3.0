@@ -29,9 +29,9 @@ from rest_framework import generics
 from feed.serializers import FeedSerializer
 from notification.models import Notification
 
-from .models import UserProfile, SkillTag, InterestTag, EducationTag, ExperienceTag, CertificationTag, UserRefer
+from .models import UserProfile, SkillTag, InterestTag, EducationTag, ExperienceTag, CertificationTag, UserRefer, ConnectionRequest
 from .serializers import (UserProfileSerializer, UserSerializer,
-                          UserSerializerWithToken, CurrentUserSerializer, UserReferSerializer)
+                          UserSerializerWithToken, CurrentUserSerializer, UserReferSerializer, ConnectionRequestSerializer)
 
 from rest_framework.generics import CreateAPIView
 
@@ -442,3 +442,20 @@ class CreateRefer(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = UserRefer.objects.all()
     serializer_class = UserReferSerializer
+
+
+class ConnectionList(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = ConnectionRequest.objects.all()
+    serializer_class = ConnectionRequestSerializer
+
+    def get(self, request, format=None):
+        content = {
+            'status': 'request was permitted'
+        }
+        return Response(content)
+class CreateRequest(generics.CreateAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = ConnectionRequest.objects.all()
+    serializer_class = ConnectionRequestSerializer
+

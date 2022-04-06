@@ -35,6 +35,8 @@ urlpatterns = [
     path('<str:username>/mumbles/', views.user_mumbles, name="user-mumbles"),
     path('referlist', views.ReferList.as_view(), name="refers"),
     path('createrefer', views.CreateRefer.as_view(), name="createrefer"),
+    path('connectionlist', views.ConnectionList.as_view(), name="connections"),
+    path('createrequest', views.CreateRequest.as_view(), name="createrequest"),
 
     # Forget password or reset password
     path('password/change/',views.password_change,name="password-change"),
