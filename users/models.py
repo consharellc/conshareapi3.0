@@ -65,7 +65,7 @@ class ConnectionRequest(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    connections = models.ForeignKey(ConnectionRequest,related_name='connections', on_delete=models.CASCADE)
+    connections = models.ManyToManyField(User, related_name='connection')
     name = models.CharField(max_length=200, null=True)
     username = models.CharField(max_length=200, null=True)
     profile_pic = models.ImageField(blank=True, null=True, default='default.png')
