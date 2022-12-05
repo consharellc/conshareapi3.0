@@ -4,7 +4,7 @@ from .models import Feed, FeedLike
 
 
 class AdminFeed(admin.ModelAdmin):
-    list_display = ('user', 'vote_rank', 'created','get_utc')
+    list_display = ('user', 'vote_rank', 'created')
     search_fields = ('user',)
     list_filter = ('created', 'vote_rank', 'user',)
     empty_value_display = '-empty field-'
