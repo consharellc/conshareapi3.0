@@ -264,6 +264,7 @@ def update_certifications(request):
     return Response(serializer.data)
 
 
+# decorators 
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
 def follow_user(request, username):

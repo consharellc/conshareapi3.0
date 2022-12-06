@@ -30,15 +30,15 @@ class AccountTests(APITestCase):
         # Creating another account to test following 
 
         data = {
-            'username':'praveen',
-            'email':'praveen@gmail.com',
+            'username':'elonmusk',
+            'email':'elonmusk@gmail.com',
             'password':'SomethingRandomPassword@123'
         }
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(User.objects.count(), 2)
-        self.assertEqual(User.objects.get(username='praveen').username,data.get('username'))
-        self.another_user = User.objects.get(username='praveen')
+        self.assertEqual(User.objects.get(username='elonmusk').username,data.get('username'))
+        self.another_user = User.objects.get(username='elonmusk')
 
 
     def test_users_follow_view(self):
@@ -47,7 +47,7 @@ class AccountTests(APITestCase):
         client.force_authenticate(user=self.test_user)
         # get following user count before follow
         user_followers_before = self.another_user.userprofile.followers.count()
-        response = client.post('/api/users/praveen/follow/',args=[self.another_user.username])
+        response = client.post('/api/users/elonmusk/follow/',args=[self.another_user.username])
         user_followers_after = self.another_user.userprofile.followers.count()
 
         # test if follow was successful
@@ -59,7 +59,7 @@ class AccountTests(APITestCase):
         url = 'users-api:login'
         reversed_url = reverse(url)
         data = {
-            'username':'praveen',
+            'username':'elonmusk',
             'password':'SomethingRandomPassword@123'
         }
         client = APIClient()
@@ -87,8 +87,8 @@ class AccountTests(APITestCase):
     
     
     def test_user_email_is_valid(self):
-        email = 'rshalem@gmail.com'
-        self.assertEqual(email_validator(email), 'rshalem@gmail.com')
+        email = 'coderfpv@gmail.com'
+        self.assertEqual(email_validator(email), 'coderfpv@gmail.com')
         print('PASSED EMAIL VERIFICATION TEST')
 
     def test_user_following_view(self):
@@ -167,7 +167,7 @@ class AccountTests(APITestCase):
         # test_user should be following 0 people at the start
         user_following_before = self.test_user.following.count()
         self.client.force_authenticate(user=self.test_user)
-        response = self.client.post('/api/users/praveen/follow/',args=[self.another_user.username])
+        response = self.client.post('/api/users/elonmusk/follow/',args=[self.another_user.username])
 
         # check the following endpoint to verify that test_user comes back
         url = 'users-api:following'

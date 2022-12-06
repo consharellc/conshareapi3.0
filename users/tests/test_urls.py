@@ -22,7 +22,7 @@ class AccountTests(APITestCase):
 
     def test_users_follow_url(self):
         url = 'users-api:follow-user'
-        reversed_url = reverse(url,args=['praveen'])
+        reversed_url = reverse(url,args=['elonmusk'])
         self.assertEqual(resolve(reversed_url).func,follow_user)
 
     def test_user_profile_update_url(self):
