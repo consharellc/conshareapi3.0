@@ -7,7 +7,7 @@ from django_countries.fields import CountryField
 
 
 
-# A topic tag is added to by the user so they can content on their feed with the 
+# A Interest tag is added to by the user so they can content on their feed with the 
 # related tags that
 # They have selected
 class InterestTag(models.Model):
@@ -24,6 +24,7 @@ class SkillTag(models.Model):
     def __str__(self):
         return self.name
 
+# Education is added by the use to indicate different education levels achieved 
 class EducationTag(models.Model):
     school_name = models.CharField(primary_key=True, max_length=200, null=False, blank=False)
     field = models.CharField(max_length=300, null=False, blank=False)
@@ -33,6 +34,7 @@ class EducationTag(models.Model):
     def __str__(self) -> str:
         return self.field
 
+# Certification the user has can be added
 class CertificationTag(models.Model):
     title = models.CharField(primary_key=True, max_length=200, null=False, blank=False)
     issuer = models.CharField( max_length=200, null=False, blank=False)
@@ -42,6 +44,7 @@ class CertificationTag(models.Model):
     def __str__(self) -> str:
         return self.title
 
+# Job experience  can be added 
 class ExperienceTag(models.Model):
     job_title = models.CharField(primary_key=True, max_length=200, null=False, blank=False)
     company = models.CharField( max_length=200, null=False, blank=False)
@@ -51,6 +54,7 @@ class ExperienceTag(models.Model):
 
     def __str__(self) -> str:
         return self.job_title
+
 
 class ConnectionRequest(models.Model):
     """ connection request from current user to other user"""

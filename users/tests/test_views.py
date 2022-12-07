@@ -7,7 +7,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 # Create your tests here.
 
-from ..models import SkillTag, TopicTag
+from users.models import SkillTag, InterestTag,EducationTag, ExperienceTag, CertificationTag
 
 from users.views import email_validator
 
@@ -155,12 +155,12 @@ class AccountTests(APITestCase):
         reversed_url = reverse(url)
         self.client.force_authenticate(user=self.test_user)
         response = self.client.patch(reversed_url, [
-            {'name': 'agile'}
+            {'name': 'programming'}
         ])
         response_json = json.loads(response.content)
-        tag = TopicTag.objects.get(name='agile')
-        self.assertEqual(tag.name, 'agile')
-        self.assertEqual(response_json['interests'], [{'name': 'agile'}])
+        tag = InterestTag.objects.get(name='programming')
+        self.assertEqual(tag.name, 'programming')
+        self.assertEqual(response_json['interests'], [{'name': 'programming'}])
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_users_follow_view(self):
