@@ -8,8 +8,8 @@ def update_comment_counts(parent, action):
         parent.save()
         return update_comment_counts(parent.parent, action)
 
-#Gets triggered on post created and updates remumble count if shared or deleted
-def update_remumble_counts(parent, action):
+#Gets triggered on post created and updates refeed count if shared or deleted
+def update_refeed_counts(parent, action):
 
     if action == 'add':
 

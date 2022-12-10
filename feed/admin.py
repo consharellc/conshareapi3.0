@@ -17,7 +17,7 @@ class AdminFeed(admin.ModelAdmin):
 
 
 class AdminFeedLike(admin.ModelAdmin):
-    list_display = ('user', 'mumble', 'value')
+    list_display = ('user', 'feed', 'value')
     search_fields = ('user',)
     list_filter = ('user',)
     empty_value_display = '-empty field-'

@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 
-app_name = 'mumbles-api-discussions'
+app_name = 'conshare-api-discussions'
 
 
 urlpatterns = [

@@ -33,7 +33,7 @@ class AccountTests(APITestCase):
             'username':'elonmusk',
             'email':'elonmusk@gmail.com',
             'password':'SomethingRandomPassword@123'
-        }
+            }
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(User.objects.count(), 2)
@@ -99,21 +99,14 @@ class AccountTests(APITestCase):
         response = client.get(reversed_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_user_mumbles_view(self):
-        url = 'users-api:user-mumbles'
+    def test_user_feeds_view(self):
+        url = 'users-api:user-feeds'
         reversed_url = reverse(url,args=[self.test_user.username])
         client = APIClient()
         client.force_authenticate(user=self.test_user)
         response = client.get(reversed_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_user_articles_view(self):
-        url = 'users-api:user-articles'
-        reversed_url = reverse(url,args=[self.test_user.username])
-        client = APIClient()
-        client.force_authenticate(user=self.test_user)
-        response = client.get(reversed_url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_user_password_change_view(self):
         url = 'users-api:password-change'

@@ -2,47 +2,47 @@ from django.db.models.signals import post_save, pre_save, post_delete
 from django.contrib.auth.models import User
 from users.models import UserProfile
 from .models import Feed, FeedLike
-from .utils import update_comment_counts, update_remumble_counts
+from .utils import update_comment_counts, update_refeed_counts
 
-def update_mumble(sender, instance, created, **kwargs):
+def update_feed(sender, instance, created, **kwargs):
     #If a post is created & is a comment, them update the parent
 
     if created and instance.parent:
         update_comment_counts(instance.parent, 'add')
 
-    if instance.remumble:
-        parent = instance.remumble
-        update_remumble_counts(parent, 'add')
+    if instance.refeed:
+        parent = instance.refeed
+        update_refeed_counts(parent, 'add')
 
 
-def delete_mumble_comments(sender, instance, **kwargs):
+def delete_feed_comments(sender, instance, **kwargs):
     #If a post is created & is a comment, them update the parent
 
     try:
         if instance.parent:
             update_comment_counts(instance.parent, 'delete')
     except Exception as e:
-        print('mumble associated with comment was deleted')
+        print('feed associated with comment was deleted')
 
     try:
-        if instance.remumble:
-            update_remumble_counts(instance.remumble, 'delete')
+        if instance.refeed:
+            update_refeed_counts(instance.refeed, 'delete')
     except Exception as e:
-        print('remumble associated with comment was deleted')
+        print('refeed associated with comment was deleted')
 
-post_save.connect(update_mumble, sender=Feed)
-post_delete.connect(delete_mumble_comments, sender=Feed)
+post_save.connect(update_feed, sender=Feed)
+post_delete.connect(delete_feed_comments, sender=Feed)
 
 
 def vote_updated(sender, instance, **kwargs):
     try:
-        mumble = instance.mumble
-        up_votes =  len(mumble.votes.through.objects.filter(mumble=mumble, value='upvote'))
-        down_votes =  len(mumble.votes.through.objects.filter(mumble=mumble, value='downvote'))
-        mumble.vote_rank = (up_votes - down_votes)
-        mumble.save()
+        feed = instance.feed
+        up_votes =  len(feed.votes.through.objects.filter(feed=feed, value='upvote'))
+        down_votes =  len(feed.votes.through.objects.filter(feed=feed, value='downvote'))
+        feed.vote_rank = (up_votes - down_votes)
+        feed.save()
     except Exception as e:
-        print('mumble the vote was associated with was already deleted')
+        print('feed the vote was associated with was already deleted')
 
 
 

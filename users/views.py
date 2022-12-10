@@ -172,11 +172,11 @@ def user(request, username):
 
 
 @api_view(['GET'])
-def user_mumbles(request, username):
+def user_feeds(request, username):
     try:
         user = User.objects.get(username=username)
-        mumbles = user.mumble_set.filter(parent=None)
-        serializer = FeedSerializer(mumbles, many=True)
+        feeds = user.feed_set.filter(parent=None)
+        serializer = FeedSerializer(feeds, many=True)
         return Response(serializer.data)
     except Exception as e:
         return Response({'detail': f'{e}'}, status=status.HTTP_404_NOT_FOUND)
@@ -375,7 +375,7 @@ def send_activation_email(request):
     user = request.user
     user_profile = UserProfile.objects.get(user=user)
     try:
-        mail_subject = 'Verify your Mumble account.'
+        mail_subject = 'Verify your feed account.'
         message = render_to_string('verify-email.html', {
             'user': user_profile,
             'uid': urlsafe_base64_encode(force_bytes(user.pk)),

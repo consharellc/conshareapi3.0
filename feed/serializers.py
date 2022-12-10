@@ -7,7 +7,7 @@ from users.serializers import UserProfileSerializer, UserSerializer
 
 class FeedSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField(read_only=True)
-    original_mumble = serializers.SerializerMethodField(read_only=True)
+    original_feed = serializers.SerializerMethodField(read_only=True)
     up_voters = serializers.SerializerMethodField(read_only=True)
     down_voters = serializers.SerializerMethodField(read_only=True)
 
@@ -21,8 +21,8 @@ class FeedSerializer(serializers.ModelSerializer):
         return serializer.data
 
 
-    def get_original_mumble(self, obj):
-        original = obj.remumble
+    def get_original_feed(self, obj):
+        original = obj.refeed
         if original != None:
             serializer = FeedSerializer(original, many=False)
             return serializer.data
@@ -31,7 +31,7 @@ class FeedSerializer(serializers.ModelSerializer):
 
     def get_up_voters(self, obj):
         # Returns list of users that upvoted post
-        voters = obj.votes.through.objects.filter(mumble=obj, value='upvote').values_list('user', flat=True)
+        voters = obj.votes.through.objects.filter(feed=obj, value='upvote').values_list('user', flat=True)
 
         voter_objects = obj.votes.filter(id__in=voters)
         serializer = UserSerializer(voter_objects, many=True)
@@ -39,7 +39,7 @@ class FeedSerializer(serializers.ModelSerializer):
 
     def get_down_voters(self, obj):
         # Returns list of users that upvoted post
-        voters = obj.votes.through.objects.filter(mumble=obj, value='downvote').values_list('user', flat=True)
+        voters = obj.votes.through.objects.filter(feed=obj, value='downvote').values_list('user', flat=True)
 
         voter_objects = obj.votes.filter(id__in=voters)
         serializer = UserSerializer(voter_objects, many=True)

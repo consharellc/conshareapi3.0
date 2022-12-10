@@ -21,15 +21,15 @@ def article_created(sender, instance, created, **kwargs):
         )
 
 
-def mumble_created(sender, instance, created, **kwargs):
+def feed_created(sender, instance, created, **kwargs):
     if not created: return
     followers = instance.user.userprofile.followers.all()
     for follower in followers:
         notification = Notification.objects.create(
             to_user=follower,
             created_by=instance.user,
-            notification_type='mumble',
-            mumble=instance,
+            notification_type='feed',
+            feed=instance,
             content=f"{instance.user.userprofile.name} posted a new Feed."
         )
 
@@ -48,5 +48,5 @@ def discussion_created(sender, instance, created, **kwargs):
         )
 
 
-post_save.connect(mumble_created, sender=Feed)
+post_save.connect(feed_created, sender=Feed)
 post_save.connect(discussion_created, sender=Discussion)

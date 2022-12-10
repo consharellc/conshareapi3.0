@@ -4,7 +4,7 @@ from rest_framework.test import APITestCase
 from users.views import (
     follow_user , users , UserProfileUpdate , 
     ProfilePictureUpdate , users_recommended ,
-    user , user_mumbles, password_change,
+    user , user_feeds, password_change,
     send_activation_email, activate)
 # Create your tests here.
 
@@ -46,10 +46,10 @@ class AccountTests(APITestCase):
         reversed_url = reverse(url,args=['test'])
         self.assertEqual(resolve(reversed_url).func,user)
 
-    def test_user_mumbles(self):
-        url = 'users-api:user-mumbles'
+    def test_user_feeds(self):
+        url = 'users-api:user-feeds'
         reversed_url = reverse(url,args=['test'])
-        self.assertEqual(resolve(reversed_url).func,user_mumbles)
+        self.assertEqual(resolve(reversed_url).func,user_feeds)
 
     def test_user_password_url(self):
         url = 'users-api:password-change'

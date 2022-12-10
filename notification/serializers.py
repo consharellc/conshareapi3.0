@@ -8,7 +8,7 @@ from discussion.serializers import DiscussionSerializer
 class NotificationSerializer(serializers.ModelSerializer):
     created_by = serializers.SerializerMethodField(read_only=True)
     followed_by = serializers.SerializerMethodField(read_only=True)
-    mumble = serializers.SerializerMethodField(read_only=True)
+    feed = serializers.SerializerMethodField(read_only=True)
     article = serializers.SerializerMethodField(read_only=True)
     discussion = serializers.SerializerMethodField(read_only=True)
     
@@ -24,9 +24,9 @@ class NotificationSerializer(serializers.ModelSerializer):
             return UserProfileSerializer(obj.followed_by.userprofile, many=False).data
         return None
 
-    def get_mumble(self, obj):
-        if obj.notification_type == 'mumble':
-            return FeedSerializer(obj.mumble, many=False).data
+    def get_feed(self, obj):
+        if obj.notification_type == 'feed':
+            return FeedSerializer(obj.feed, many=False).data
         return None
 
     def get_discussion(self, obj):

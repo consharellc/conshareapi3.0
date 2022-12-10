@@ -7,10 +7,10 @@ import uuid
 #This needs to be shareable
 class Feed(models.Model):
     parent =models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
-    #For re-mumble (Share) functionality
-    remumble = models.ForeignKey("self", on_delete=models.CASCADE, related_name='remumbles', null=True, blank=True)
+    #For re-feed (Share) functionality
+    refeed = models.ForeignKey("self", on_delete=models.CASCADE, related_name='refeeds', null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    #content is allowed to be plan for remumbles
+    #content is allowed to be plan for refeeds
     content = RichTextField(null=True, blank=True)
     image = models.ImageField(blank=True, null=True)
     video = models.FileField(blank=True, null=True)
@@ -18,7 +18,7 @@ class Feed(models.Model):
     comment_count = models.IntegerField(blank=True, null=True, default=0)
     share_count = models.IntegerField(blank=True, null=True, default=0)
     created = models.DateTimeField(auto_now_add=True)
-    votes = models.ManyToManyField(User, related_name='mumble_user', blank=True, through='FeedLike')
+    votes = models.ManyToManyField(User, related_name='feed_user', blank=True, through='FeedLike')
     id = models.UUIDField(default=uuid.uuid4,  unique=True, primary_key=True, editable=False)
 
     class Meta:
@@ -28,18 +28,18 @@ class Feed(models.Model):
         try:
             content = self.content[0:80]
         except Exception:
-            content = 'Remumbled: ' + str(self.remumble.content[0:80])
+            content = 'refeeded: ' + str(self.refeed.content[0:80])
         return content
 
     @property
     def shares(self):
-        queryset = self.remumbles.all()
+        queryset = self.refeeds.all()
         return queryset
 
     @property
     def comments(self):
         #Still need a way to get all sub elemsnts
-        queryset = self.mumble_set.all()
+        queryset = self.feed_set.all()
         return queryset
 
     
@@ -52,9 +52,9 @@ class FeedLike(models.Model):
         )
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    mumble = models.ForeignKey(Feed, on_delete=models.CASCADE, null=True, blank=True)
+    feed = models.ForeignKey(Feed, on_delete=models.CASCADE, null=True, blank=True)
     value = models.CharField(max_length=20, choices=CHOICES)
     id = models.UUIDField(default=uuid.uuid4,  unique=True, primary_key=True, editable=False)
 
     def __str__(self):
-        return str(self.user) + ' ' +  str(self.value)  + '"' + str(self.mumble) + '"'
+        return str(self.user) + ' ' +  str(self.value)  + '"' + str(self.feed) + '"'

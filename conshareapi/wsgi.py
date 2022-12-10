@@ -1,5 +1,5 @@
 """
-WSGI config for mumblebackend project.
+WSGI config for consharebackend project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

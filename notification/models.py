@@ -10,7 +10,7 @@ from feed.models import Feed
 class Notification(models.Model):
 
     CHOICES = (
-        ('mumble', 'mumble'),
+        ('feed', 'feed'),
         ('discussion', 'discussion'),
         ('follow', 'follow'),
     )
@@ -23,7 +23,7 @@ class Notification(models.Model):
     is_read = models.BooleanField(default=False)
     notification_type = models.CharField(max_length=20, choices=CHOICES)
  
-    mumble = models.ForeignKey(Feed,on_delete=models.CASCADE, null=True, blank=True)
+    feed = models.ForeignKey(Feed,on_delete=models.CASCADE, null=True, blank=True)
     discussion = models.ForeignKey(Discussion,on_delete=models.CASCADE, null=True, blank=True)
     followed_by = models.ForeignKey(User,on_delete=models.CASCADE, null=True, blank=True, related_name='followed_by')
     

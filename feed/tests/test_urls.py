@@ -21,42 +21,42 @@ class FeedTestsUrls(APITestCase):
         self.test_user = User.objects.get(username='test')
         self.test_user_pwd = 'test@123'
 
-    def test_mumbles_url(self):
-        url = 'mumbles-api:mumbles'
+    def test_feeds_url(self):
+        url = 'feeds-api:feeds'
         reversed_url = reverse(url)
-        self.assertEqual(resolve(reversed_url).func,views.mumbles)
+        self.assertEqual(resolve(reversed_url).func,views.feeds)
     
-    def test_mumbles_create_url(self):
-        url = 'mumbles-api:mumble-create'
+    def test_feeds_create_url(self):
+        url = 'feeds-api:feed-create'
         reversed_url = reverse(url)
-        self.assertEqual(resolve(reversed_url).func,views.create_mumble)
+        self.assertEqual(resolve(reversed_url).func,views.create_feed)
     
-    def test_mumbles_edit_url(self):
-        url = 'mumbles-api:mumble-edit'
+    def test_feeds_edit_url(self):
+        url = 'feeds-api:feed-edit'
         reversed_url = reverse(url,args=['9812-3ehj9-238d39-8hd23h'])
-        self.assertEqual(resolve(reversed_url).func,views.edit_mumble)
+        self.assertEqual(resolve(reversed_url).func,views.edit_feed)
     
-    def test_mumbles_detail_url(self):
-        url = 'mumbles-api:mumble-details'
+    def test_feeds_detail_url(self):
+        url = 'feeds-api:feed-details'
         reversed_url = reverse(url,args=['9812-3ehj9-238d39-8hd23h'])
-        self.assertEqual(resolve(reversed_url).func,views.mumble_details)
+        self.assertEqual(resolve(reversed_url).func,views.feed_details)
     
-    def test_mumbles_remumble_url(self):
-        url = 'mumbles-api:mumble-remumble'
+    def test_feeds_refeed_url(self):
+        url = 'feeds-api:feed-share'
         reversed_url = reverse(url)
-        self.assertEqual(resolve(reversed_url).func,views.remumble)
+        self.assertEqual(resolve(reversed_url).func,views.refeed)
 
-    def test_mumbles_vote_url(self):
-        url = 'mumbles-api:posts-vote'
+    def test_feeds_vote_url(self):
+        url = 'feeds-api:posts-vote'
         reversed_url = reverse(url)
         self.assertEqual(resolve(reversed_url).func,views.update_vote)
 
-    def test_mumbles_delete_url(self):
-        url = 'mumbles-api:delete-mumble'
+    def test_feeds_delete_url(self):
+        url = 'feeds-api:delete-feed'
         reversed_url = reverse(url,args=['9812-3ehj9-238d39-8hd23h'])
-        self.assertEqual(resolve(reversed_url).func,views.delete_mumble)
+        self.assertEqual(resolve(reversed_url).func,views.delete_feed)
 
-    def test_mumbles_comments_url(self):
-        url = 'mumbles-api:mumble-comments'
+    def test_feeds_comments_url(self):
+        url = 'feeds-api:feed-comments'
         reversed_url = reverse(url,args=['9812-3ehj9-238d39-8hd23h'])
-        self.assertEqual(resolve(reversed_url).func,views.mumble_comments)
+        self.assertEqual(resolve(reversed_url).func,views.feed_comments)
