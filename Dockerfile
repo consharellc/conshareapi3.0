@@ -9,16 +9,20 @@ ENV PIP_DISABLE_PIP_VERSION_CHECK 1
 ENV PYTHONDONTWRITEBYTECODE 1
 
 # create root directory for our project in the container
-RUN mkdir /conshareapi
+RUN mkdir /conshareapi3.0
 
 # Set the working directory to /conshareapi
-WORKDIR /conshareapi
+WORKDIR /conshareapi3.0
 
 # Copy the current directory contents into the container at /conshareapi
-ADD . /conshareapi/
+ADD . /conshareapi3.0/
 
 # Allows docker to cache installed dependencies between builds
 COPY requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
+
+EXPOSE 8000  
+# start server  
+CMD python manage.py runserver 
 
 

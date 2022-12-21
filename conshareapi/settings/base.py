@@ -16,7 +16,7 @@ SECRET_KEY = 'dp4#6elyt3ecr)quo6di2a)!bhrv)mdf*b&n7cj82t6gwo&yy9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'conshareapi.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
