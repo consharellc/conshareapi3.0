@@ -446,13 +446,14 @@ class CreateRefer(generics.CreateAPIView):
 
 
 class ConnectionList(generics.ListAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = []
     queryset = ConnectionRequest.objects.all()
     serializer_class = ConnectionRequestSerializer
 
     def get(self, request, format=None):
         content = {
-            'status': 'request was permitted'
+            'status': 'request was permitted',
+            'queryset': self.queryset
         }
         return Response(content)
 class CreateRequest(generics.CreateAPIView):

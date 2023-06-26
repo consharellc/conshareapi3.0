@@ -57,7 +57,7 @@ class ExperienceTag(models.Model):
 
 
 class ConnectionRequest(models.Model):
-    """ connection request from current user to other user"""
+    """ connection request from current user to other users"""
     from_user = models.ForeignKey(User, related_name='from_user', on_delete=models.CASCADE)
     to_user = models.ForeignKey(User, related_name='to_user', on_delete=models.CASCADE)
 

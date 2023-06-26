@@ -21,6 +21,8 @@ from rest_framework.documentation import include_docs_urls
 from django.conf import settings
 from django.conf.urls.static import static
 
+schema_view = get_schema_view(title="ConshareAPI", description="conshareapi documentation",version="1.0.0")
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/users/', include('users.urls')),
@@ -28,11 +30,7 @@ urlpatterns = [
     path('api/messages/', include('message.urls')),
     path('api/notifications/', include('notification.urls')),
     path('api/feeds/', include('feed.urls')),
-    path('schema/', get_schema_view(
-        title="ConshareAPI",
-        description="conshareapi documentation",
-        version="3.0.0"
-    ), name="conshare-schema"),
+    path('schema/', schema_view, name="conshare-schema"),
     path('', include_docs_urls(
         title="ConshareAPI",
         description="Conshareapi docs",

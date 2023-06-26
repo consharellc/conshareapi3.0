@@ -38,7 +38,7 @@ class Feed(models.Model):
 
     @property
     def comments(self):
-        #Still need a way to get all sub elemsnts
+        #Still need a way to get all sub elements
         queryset = self.feed_set.all()
         return queryset
 
