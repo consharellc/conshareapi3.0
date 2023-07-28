@@ -68,6 +68,11 @@ class ConnectionRequest(models.Model):
         return self.to_user.username
 
 class UserProfile(models.Model):
+    """
+    profile = UserProfile.objects.first()
+    profile.followers.all() -> All users following this profile
+    user.following.all() -> All user profiles I follow
+    """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     connections = models.ManyToManyField(User, related_name='connection')
     name = models.CharField(max_length=200, null=True)
@@ -86,11 +91,7 @@ class UserProfile(models.Model):
     followers = models.ManyToManyField(User, related_name='following', blank=True)
     email_verified = models.BooleanField(default=False)
     id = models.UUIDField(default=uuid.uuid4,  unique=True, primary_key=True, editable=False)
-    """
-    profile = UserProfile.objects.first()
-    profile.followers.all() -> All users following this profile
-    user.following.all() -> All user profiles I follow
-    """
+
 
     def __str__(self):
         return str(self.user.username)
@@ -100,15 +101,15 @@ class UserRefer(models.Model):
     """ current user doing the refer, user being reffered, user/s receving the refer"""
     referer = models.ForeignKey(User,on_delete=models.CASCADE, null=True, blank=True)
     referee = models.ForeignKey(User,on_delete=models.CASCADE, null=True, blank=True, related_name='refers')
-    caption = models.TextField(max_length=3000,null=True, blank=True)
     recipient = models.ForeignKey(User,on_delete=models.CASCADE, null=True, blank=True, related_name='recipients')
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now_add=True, db_index=True)
 
     class Meta:
         verbose_name_plural = "Referrals"
+        ordering = ('-created',)
 
     def __str__(self) -> str:
-        return str("you referred " + self.referee.username + " to ") + self.recipient.username
+        return str("user" + self.referee.username + " reffered to ") + self.recipient.username
 
 
 
