@@ -1,4 +1,3 @@
-from conshareapi.settings.base import *
 from .base import *
 import os
 # override base.py settings
