@@ -17,7 +17,7 @@ class InterestTag(models.Model):
         return self.name
 
 
-# Skills are added by teh user to indicate topics they are proficient in
+# Skills are added by teh user to indicate skills they are proficient in
 class SkillTag(models.Model):
     name = models.CharField(primary_key=True, max_length=150, null=False, blank=False)
 
@@ -83,11 +83,11 @@ class UserProfile(models.Model):
     city = models.CharField(max_length=100)
     vote_ratio = models.IntegerField(blank=True, null=True, default=0)
     followers_count = models.IntegerField(blank=True, null=True, default=0)
-    skills = models.ManyToManyField(SkillTag, related_name='personal_skills', blank=True)
-    interests = models.ManyToManyField(InterestTag, related_name='topic_interests', blank=True)
-    certifications = models.ManyToManyField(CertificationTag, related_name='licenses', blank=True)
-    jobs = models.ManyToManyField(ExperienceTag, related_name='jobs_done', blank=True)
-    education = models.ManyToManyField(EducationTag, related_name='schools', blank=True)
+    skills = models.ForeignKey(SkillTag, related_name='personal_skills', blank=True,  on_delete=models.CASCADE)
+    interests = models.ForeignKey(InterestTag, related_name='topic_interests', blank=True,  on_delete=models.CASCADE)
+    certifications = models.ForeignKey(CertificationTag, related_name='licenses', blank=True,  on_delete=models.CASCADE)
+    jobs = models.ForeignKey(ExperienceTag, related_name='jobs_done', blank=True,  on_delete=models.CASCADE)
+    education = models.ForeignKey(EducationTag, related_name='schools', blank=True,  on_delete=models.CASCADE)
     followers = models.ManyToManyField(User, related_name='following', blank=True)
     email_verified = models.BooleanField(default=False)
     id = models.UUIDField(default=uuid.uuid4,  unique=True, primary_key=True, editable=False)
