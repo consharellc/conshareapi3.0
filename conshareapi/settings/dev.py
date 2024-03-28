@@ -2,6 +2,9 @@ from .base import *
 import os
 # override base.py settings
 
+DEBUG = bool(os.environ.get("DEBUG", default=0))
+SECRET_KEY = os.environ.get("SECRET_KEY")
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 

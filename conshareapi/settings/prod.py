@@ -4,7 +4,8 @@ import django_heroku
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
-SECRET_KEY = os.environ.get('SECRET_KEY')
+DEBUG = bool(os.environ.get("DEBUG", default=0))
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 import os
 

@@ -1,6 +1,6 @@
 # The first instruction is what image we want to base our container on
 # We Use an official Python runtime as a parent image
-FROM python:3.9.6
+FROM python:3.11.4-slim-buster
 
 # The enviroment variable ensures that the python output is set straight
 # to the terminal with out buffering it first
@@ -18,11 +18,8 @@ WORKDIR /conshareapi3.0
 ADD . /conshareapi3.0/
 
 # Allows docker to cache installed dependencies between builds
+RUN pip install --upgrade pip
 COPY requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
-
-EXPOSE 8000  
-# start server 
-CMD python manage.py runserver 
 
 
