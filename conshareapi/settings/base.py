@@ -1,12 +1,15 @@
 from pathlib import Path
 import os
 from datetime import timedelta
-# import django_heroku
-
+from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
+load_dotenv(dotenv_path=os.path.join(BASE_DIR, '.env.dev'))
 
+
+
+SECRET_KEY = os.environ['SECRET_KEY']
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 ALLOWED_HOSTS = ['127.0.0.1', 'conshareapi.herokuapp.com', '0.0.0.0']
@@ -14,26 +17,34 @@ ALLOWED_HOSTS = ['127.0.0.1', 'conshareapi.herokuapp.com', '0.0.0.0']
 
 # Application definition
 
-INSTALLED_APPS = [
+
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+]
 
-
+LOCAL_APPS = [
     'users.apps.UsersConfig',
     'feed.apps.FeedConfig',
     'discussion.apps.DiscussionConfig',
     'message.apps.MessageConfig',
     'notification.apps.NotificationConfig',
+]
 
+THIRD_PARTY_APPS = [
     'rest_framework',
     'corsheaders',
     'ckeditor',
     'django_countries',
+
 ]
+
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (

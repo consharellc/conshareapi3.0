@@ -32,18 +32,18 @@ SECURE_SSL_REDIRECT = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('consharedbname'),
-        'USER': os.environ.get('conshare user'),
-        'PASSWORD': os.environ.get('consharedbpass'),
-        'HOST': os.environ.get('consharehost'),
-        'PORT': '5432',
+        'NAME': os.environ['SQL_DATABASE'],
+        'USER': os.environ['SQL_USER'],
+        'PASSWORD': os.environ['SQL_PASSWORD'],
+        'HOST': os.environ['SQL_HOST'],
+        'PORT': os.environ['PORT'],
+        
     },
     'message': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'messages.sqlite3',
     }
 }
-
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_HOST = 'smtp.mailgun.org'
 # EMAIL_PORT = 587

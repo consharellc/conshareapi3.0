@@ -3,20 +3,18 @@ import os
 # override base.py settings
 
 DEBUG = bool(os.environ.get("DEBUG", default=0))
-SECRET_KEY = os.environ.get("SECRET_KEY")
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.environ.get("SQL_DATABASE", BASE_DIR / "db.sqlite3"),
-        'ENGINE': os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
-        'USER': os.environ.get("SQL_USER", "user"),
-        'PASSWORD': os.environ.get("SQL_PASSWORD", "password"),
-        'HOST': os.environ.get("SQL_HOST", "localhost"),
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ['SQL_DATABASE'],
+        'USER': os.environ['SQL_USER'],
+        'PASSWORD': os.environ['SQL_PASSWORD'],
+        'HOST': os.environ['SQL_HOST'],
+        'PORT': os.environ['PORT'],
         
     },
     'message': {
