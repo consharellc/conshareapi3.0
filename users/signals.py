@@ -17,7 +17,7 @@ def create_profile(sender, instance, created, **kwargs):
 
 def update_profile(sender, instance, created, **kwargs):
     user_profile, _ = UserProfile.objects.get_or_create(user=instance)
-    if created == False:
+    if created is False:
         
         user_profile.username = instance.username
 

@@ -1,13 +1,12 @@
-from conshareapi.settings.base import *
-from .base import *
+import os
 import django_heroku
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
+from .base import *  # noqa: F403
 
 DEBUG = bool(os.environ.get("DEBUG", default=0))
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
-import os
 
 
 sentry_sdk.init(

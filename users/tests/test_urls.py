@@ -6,7 +6,7 @@ from users.views import (
     ProfilePictureUpdate , users_recommended ,
     user , user_feeds, password_change,
     send_activation_email, activate)
-# Create your tests here.
+
 
 class AccountTests(APITestCase):
 

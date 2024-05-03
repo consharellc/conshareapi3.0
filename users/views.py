@@ -1,4 +1,3 @@
-import datetime
 import uuid
 import random
 import os.path
@@ -29,13 +28,14 @@ from rest_framework import generics
 from feed.serializers import FeedSerializer
 from notification.models import Notification
 
-from .models import UserProfile, SkillTag, InterestTag, EducationTag, ExperienceTag, CertificationTag, UserRefer, ConnectionRequest
+from .models import (UserProfile, SkillTag, InterestTag,
+                EducationTag, ExperienceTag, CertificationTag, 
+                UserRefer, ConnectionRequest
+                )
 from .serializers import (UserProfileSerializer, UserSerializer,
-                          UserSerializerWithToken, CurrentUserSerializer, UserReferSerializer, ConnectionRequestSerializer)
-
-from rest_framework.generics import CreateAPIView
-
-# Create your views here.
+                        UserSerializerWithToken, CurrentUserSerializer, 
+                        UserReferSerializer, ConnectionRequestSerializer
+                        )
 
 
 def email_validator(email):
@@ -61,13 +61,13 @@ class RegisterView(APIView):
         password = data.get('password')
         email_valid_check_result = email_validator(email)
         messages = {'errors': []}
-        if username == None:
+        if username is None:
             messages['errors'].append('username can\'t be empty')
-        if email == None:
+        if email is None:
             messages['errors'].append('Email can\'t be empty')
         if not email_valid_check_result == email:
             messages['errors'].append(email_valid_check_result)
-        if password == None:
+        if password is None:
             messages['errors'].append('Password can\'t be empty')
         if User.objects.filter(email=email).exists():
             messages['errors'].append(
@@ -318,7 +318,7 @@ class UserProfileUpdate(APIView):
                 user.save()
                 profile.save()
             return Response({'success': True, 'message': 'successfully updated your info',
-                             'user': UserSerializer(user).data, 'updated_email': new_email}, status=200)
+                            'user': UserSerializer(user).data, 'updated_email': new_email}, status=200)
         else:
             response = serializer.errors
             return Response(response, status=401)

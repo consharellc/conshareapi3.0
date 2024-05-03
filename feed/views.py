@@ -31,9 +31,13 @@ def feeds(request):
     #Make sure parent==None is always on
     #Query 5 feeds form users you follow | TOP PRIORITY
     
-    feeds = list(Feed.objects.filter(parent=None, user__id__in=ids).order_by("-created"))[0:5]
+    feeds = list(Feed.objects.filter(
+        parent=None, user__id__in=ids
+        ).order_by("-created"))[0:5]
 
-    recentFeeds = Feed.objects.filter(Q(parent=None) & Q(vote_rank__gte=0) & Q(refeed=None)).order_by("-created")[0:5]
+    recentFeeds = Feed.objects.filter(
+        Q(parent=None) & Q(vote_rank__gte=0) & Q(refeed=None)
+        ).order_by("-created")[0:5]
 
     #Query top ranked feeds and attach to end of original queryset
     topFeeds = Feed.objects.filter(Q(parent=None)).order_by("-vote_rank", "-created")
@@ -143,7 +147,9 @@ def refeed(request):
     data = request.data
     original_feed = Feed.objects.get(id=data['id'])
     if original_feed.user == user:
-        return Response({'detail':'You can not refeed your own feed.'},status=status.HTTP_403_FORBIDDEN)
+        return Response(
+            {'detail':'You can not refeed your own feed.'},
+            status=status.HTTP_403_FORBIDDEN)
     try:
         feed = Feed.objects.filter(
             refeed=original_feed,

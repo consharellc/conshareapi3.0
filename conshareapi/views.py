@@ -18,7 +18,7 @@ def api_root(request):
 
         # feeds endpoints
         'feeds': reverse('feeds-api:feeds', request=request),
-        'feed-create': reverse('feeds-api:feed-create', request=request),
+        'feed_create': reverse('feeds-api:feed_create', request=request),
         'feed-share': reverse('feeds-api:feed-share', request=request),
         'posts-vote': reverse('feeds-api:posts-vote', request=request),
     })

@@ -1,14 +1,13 @@
-from django.shortcuts import render
+from django.db.models import Q
 from rest_framework.response import Response 
 from rest_framework.decorators import api_view
 from rest_framework import status
-from django.db.models import Q
-from .models import Discussion, DiscussionComment , DiscussionVote
-from .serializers import DiscussionSerializer , DiscussionCommentSerializer
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import permission_classes
 from rest_framework.pagination import PageNumberPagination
 from users.models import InterestTag
+from .models import Discussion, DiscussionComment , DiscussionVote
+from .serializers import DiscussionSerializer , DiscussionCommentSerializer
 
 
 @api_view(['GET'])
@@ -58,7 +57,9 @@ def discussions(request):
     if query == None:
         query = ''
     # Q objects is used to make complex query to search in discussion content and headline
-    discussions = Discussion.objects.filter(Q(content__icontains=query)|Q(headline__icontains=query)).order_by("-created")
+    discussions = Discussion.objects.filter(
+        Q(content__icontains=query)|Q(headline__icontains=query)
+        ).order_by("-created")
     paginator = PageNumberPagination()
     paginator.page_size = 10
     result_page = paginator.paginate_queryset(discussions,request)
@@ -141,13 +142,17 @@ def update_vote(request):
 
     if comment_id:
         comment = DiscussionComment.objects.get(id=comment_id)
-        vote, created = DiscussionVote.objects.get_or_create(discussion=discussion,comment=comment,user=user,value=1)
+        vote, created = DiscussionVote.objects.get_or_create(
+            discussion=discussion,comment=comment,user=user,value=1
+            )
         if not created:
             vote.delete()
         else:
             vote.save()
     else:
-        vote, created = DiscussionVote.objects.get_or_create(discussion=discussion,user=user,value=1)
+        vote, created = DiscussionVote.objects.get_or_create(
+            discussion=discussion,user=user,value=1
+            )
         if not created:
             vote.delete()
         else:

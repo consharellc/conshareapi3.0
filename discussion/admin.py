@@ -1,10 +1,9 @@
-from django.contrib import admin
 from datetime import timedelta
-from .models import (Discussion, DiscussionComment, DiscussionVote)
+from django.contrib import admin
 from django.apps import apps
+from .models import (Discussion, DiscussionComment, DiscussionVote)
 
 models = apps.get_models()
-
 
 
 @admin.register(Discussion)
@@ -52,6 +51,3 @@ for model in models:
     else:
         admin.site.register(model)
 
-# admin.site.register(Discussion)
-# admin.site.register(DiscussionComment)
-# admin.site.register(DiscussionVote)

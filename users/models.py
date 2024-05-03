@@ -1,9 +1,6 @@
-from email.policy import default
-from tabnanny import verbose
 from django.contrib.auth.models import User
 from django.db import models
 import uuid
-from django_countries.fields import CountryField
 
 
 

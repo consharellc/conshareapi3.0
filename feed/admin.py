@@ -1,5 +1,5 @@
-from django.contrib import admin
 from datetime import timedelta
+from django.contrib import admin
 from .models import Feed, FeedLike
 
 
@@ -13,7 +13,6 @@ class AdminFeed(admin.ModelAdmin):
         return obj.created + timedelta(minutes=330)
 
     get_utc.short_description = 'Created (UTC)'
-
 
 
 class AdminFeedLike(admin.ModelAdmin):

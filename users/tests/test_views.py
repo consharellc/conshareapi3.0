@@ -1,14 +1,12 @@
 import re
-from django.contrib.auth.models import User
-from rest_framework.test import APIClient
 import json
 from django.urls import reverse
+from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.test import APITestCase
-# Create your tests here.
+from rest_framework.test import APIClient
 
-from users.models import SkillTag, InterestTag,EducationTag, ExperienceTag, CertificationTag
-
+from users.models import SkillTag, InterestTag
 from users.views import email_validator
 
 class AccountTests(APITestCase):

@@ -5,7 +5,7 @@ app_name = 'feeds-api'
 
 urlpatterns = [
      path('', views.feeds, name="feeds"),
-     path('create/', views.create_feed, name="feed-create"),
+     path('create/', views.create_feed, name="feed_create"),
      path('edit/<str:pk>/', views.edit_feed, name="feed-edit"),
      path('details/<str:pk>/', views.feed_details, name="feed-details"),
      path('share/', views.refeed, name="feed-share"),

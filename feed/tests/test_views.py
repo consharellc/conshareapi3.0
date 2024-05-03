@@ -1,9 +1,8 @@
 from django.urls import reverse
-from rest_framework import status
 from django.contrib.auth.models import User
+from rest_framework import status
 from rest_framework.test import APITestCase , APIClient
 import json
-# Create your tests here.
 
 class FeedTestsViews(APITestCase):
 
@@ -20,7 +19,7 @@ class FeedTestsViews(APITestCase):
         self.assertEqual(User.objects.get().username, 'test')
         self.test_user = User.objects.get(username='test')
         self.test_user_pwd = 'test@123'
-        url = 'feeds-api:feed-create'
+        url = 'feeds-api:feed_create'
         reversed_url = reverse(url)
         data = {
             'content':"feed Test Post"

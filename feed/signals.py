@@ -1,6 +1,4 @@
-from django.db.models.signals import post_save, pre_save, post_delete
-from django.contrib.auth.models import User
-from users.models import UserProfile
+from django.db.models.signals import post_save, post_delete
 from .models import Feed, FeedLike
 from .utils import update_comment_counts, update_refeed_counts
 
@@ -43,7 +41,6 @@ def vote_updated(sender, instance, **kwargs):
         feed.save()
     except Exception as e:
         print('feed the vote was associated with was already deleted')
-
 
 
 post_save.connect(vote_updated, sender=FeedLike)

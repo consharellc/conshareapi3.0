@@ -15,11 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from . import views
-from rest_framework.schemas import get_schema_view
-from rest_framework.documentation import include_docs_urls
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework.schemas import get_schema_view
+from rest_framework.documentation import include_docs_urls
 
 schema_view = get_schema_view(title="ConshareAPI", description="conshareapi documentation",version="1.0.0")
 
@@ -30,11 +29,11 @@ urlpatterns = [
     path('api/messages/', include('message.urls')),
     path('api/notifications/', include('notification.urls')),
     path('api/feeds/', include('feed.urls')),
-    path('schema/', schema_view, name="conshare-schema"),
+    path('schema/', schema_view, name="conshare_schema"),
     path('', include_docs_urls(
         title="ConshareAPI",
         description="Conshareapi docs",
-    ), name="conshare-docs")
+    ), name="conshare_docs")
 ]
 
 if settings.DEBUG:

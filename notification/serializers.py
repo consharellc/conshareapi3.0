@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from .models import Notification
 
+from .models import Notification
 from users.serializers import UserProfileSerializer
 from feed.serializers import FeedSerializer
 from discussion.serializers import DiscussionSerializer

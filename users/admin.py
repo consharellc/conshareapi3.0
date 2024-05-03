@@ -1,6 +1,10 @@
 from django.contrib import admin
 from datetime import timedelta
-from .models import InterestTag, SkillTag, UserProfile, EducationTag, ExperienceTag, CertificationTag, UserRefer, ConnectionRequest
+from .models import (
+    InterestTag, SkillTag, UserProfile, 
+    EducationTag, ExperienceTag, 
+    CertificationTag, UserRefer, ConnectionRequest
+    )
 
 class AdminEducationTag(admin.ModelAdmin):
     search_fields = ('school_name',)

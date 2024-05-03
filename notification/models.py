@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 import uuid
 
-
 from discussion.models import Discussion
 from feed.models import Feed
 
