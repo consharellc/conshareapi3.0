@@ -22,7 +22,7 @@ class FeedSerializer(serializers.ModelSerializer):
 
     def get_original_feed(self, obj):
         original = obj.refeed
-        if original != None:
+        if original is not None:
             serializer = FeedSerializer(original, many=False)
             return serializer.data
         else:
